@@ -5,7 +5,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.51.6
-Release:	%mkrel 13
+Release:	%mkrel 14
 License:	LGPL
 Group:		System/Libraries
 URL:		http://www.mandriva.com/
@@ -13,7 +13,7 @@ Source0:	ftp://ftp.redhat.com/pub/redhat/linux/code/newt/newt-%{version}.tar.bz2
 Patch0:		newt-gpm-fix.diff
 Patch1:		newt-mdkconf.patch
 Patch2:		newt-0.51.4-fix-wstrlen-for-non-utf8-strings.patch
-Patch3:		newt-0.51.6-do-not-ignore-EARLY-events-in-listbox--and-allow-textbox-to-take-focus.patch
+Patch3:		newt-0.51.6-allow-textbox-to-take-focus.patch
 Patch4:		newt-0.51.6-assorted-fixes.patch
 BuildRequires:	glibc-static-devel
 BuildRequires:	popt-devel
