@@ -1,19 +1,18 @@
-%define majver 0.51
+%define majver 0.52
 %define libname %mklibname %{name} %{majver}
 %define libdevel %{libname}-devel
 
 Summary:	A development library for text mode user interfaces
 Name:		newt
-Version:	0.51.6
-Release:	%mkrel 14
+Version:	0.52.6
+Release:	%mkrel 1
 License:	LGPL
 Group:		System/Libraries
 URL:		http://www.mandriva.com/
-Source0:	ftp://ftp.redhat.com/pub/redhat/linux/code/newt/newt-%{version}.tar.bz2
+Source0:	ftp://ftp.redhat.com/pub/redhat/linux/code/newt/newt-%{version}.tar.gz
 Patch0:		newt-gpm-fix.diff
-Patch1:		newt-mdkconf.patch
+Patch1:		newt-0.52.6-mdvconf.patch
 Patch2:		newt-0.51.4-fix-wstrlen-for-non-utf8-strings.patch
-Patch3:		newt-0.51.6-allow-textbox-to-take-focus.patch
 Patch4:		newt-0.51.6-assorted-fixes.patch
 BuildRequires:	glibc-static-devel
 BuildRequires:	popt-devel
@@ -49,6 +48,7 @@ Requires:	slang-devel %{libname} = %{version}
 Provides:	lib%{name}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%{name}-devel
+Conflicts:	libnewt0.51-devel
 
 %description -n %libdevel
 Newt is a programming library for color text mode, widget based user
@@ -63,13 +63,12 @@ Install newt-devel if you want to develop applications which will use newt.
 
 %setup -q
 %patch0 -p0
-%patch1 -p0
+%patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
 
 %build
-%configure --with-gpm-support
+%configure --with-gpm-support --without-tcl
 %make
 %make shared
 
@@ -83,6 +82,8 @@ ln -snf lib%{name}.so.%{version} %{buildroot}%{_libdir}/lib%{name}.so.%{majver}
 
 rm -rf %{buildroot}%{_libdir}/python{1.5,2.0,2.1,2.2}
 
+%find_lang %{name}
+
 %post -n %{libname} -p /sbin/ldconfig
 
 %postun -n %{libname} -p /sbin/ldconfig
@@ -95,11 +96,12 @@ rm -rf %{buildroot}
 %doc CHANGES
 %{_libdir}/libnewt.so.*
 
-%files 
+%files -f %{name}.lang
 %defattr (-,root,root)
 %doc CHANGES COPYING
 %{_bindir}/whiptail
 %{_libdir}/python%pyver/site-packages/*
+%{_mandir}/man1/whiptail.1*
 
 %files -n %libdevel
 %defattr (-,root,root)
