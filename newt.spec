@@ -10,10 +10,14 @@ License:	LGPL
 Group:		System/Libraries
 URL:		http://www.mandriva.com/
 Source0:	ftp://ftp.redhat.com/pub/redhat/linux/code/newt/newt-%{version}.tar.gz
-Patch0:		newt-gpm-fix.diff
-Patch1:		newt-0.52.6-mdvconf.patch
-Patch2:		newt-0.51.4-fix-wstrlen-for-non-utf8-strings.patch
-Patch4:		newt-0.51.6-assorted-fixes.patch
+Patch0: 	newt-gpm-fix.diff
+Patch1: 	newt-0.52.6-mdvconf.patch
+Patch2: 	newt-0.51.4-fix-wstrlen-for-non-utf8-strings.patch
+Patch3: 	newt-0.51.6-assorted-fixes.patch
+Patch4: 	newt-0.52.6-entry.patch
+Patch5: 	newt-0.52.6-countitems.patch
+Patch6: 	newt-0.52.6-cursor.patch
+Patch7: 	newt-0.52.6-memleaks.patch
 BuildRequires:	glibc-static-devel
 BuildRequires:	popt-devel
 BuildRequires:	python-devel >= 2.2
@@ -60,12 +64,15 @@ whiptail. Newt is based on the slang library.
 Install newt-devel if you want to develop applications which will use newt.
 
 %prep
-
 %setup -q
-%patch0 -p0
-%patch1 -p1
-%patch2 -p1
-%patch4 -p1
+%patch0 -p0 -b .gpm-fix
+%patch1 -p1 -b .mdvconf
+%patch2 -p1 -b .fix-wstrlen-for-non-utf8-strings
+%patch3 -p1 -b .assorted-fixes
+%patch4 -p0 -b .entry
+%patch5 -p0 -b .countitems
+%patch6 -p0 -b .cursor
+%patch7 -p0 -b .memleaks
 
 %build
 %configure --with-gpm-support --without-tcl
