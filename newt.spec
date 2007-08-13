@@ -5,7 +5,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.6
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	LGPL
 Group:		System/Libraries
 URL:		http://www.mandriva.com/
@@ -36,7 +36,7 @@ whiptail. Newt is based on the slang library.
 %package -n	%{libname}
 Summary:	Newt windowing toolkit development files library
 Group:		Development/C
-Provides:	%{name} = %{version}-%{release}
+Provides:	lib%{name} = %{version}-%{release}
 
 %description -n %{libname}
 Newt is a programming library for color text mode, widget based user
