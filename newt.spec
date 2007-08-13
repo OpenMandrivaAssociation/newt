@@ -23,7 +23,7 @@ BuildRequires:	popt-devel
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	slang-devel
 Requires:	slang
-Provides:	snack
+Provides:	python-snack
 Provides:	whiptail
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
