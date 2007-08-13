@@ -5,7 +5,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.6
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	LGPL
 Group:		System/Libraries
 URL:		http://www.mandriva.com/
@@ -24,6 +24,7 @@ BuildRequires:	python-devel >= 2.2
 BuildRequires:	slang-devel
 Requires:	slang
 Provides:	snack
+Provides:	whiptail
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
