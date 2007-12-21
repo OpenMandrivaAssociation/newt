@@ -25,6 +25,7 @@ BuildRequires:	slang-devel
 Requires:	slang
 Provides:	python-snack
 Provides:	whiptail
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Newt is a programming library for color text mode, widget based user
