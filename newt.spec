@@ -92,9 +92,13 @@ rm -rf %{buildroot}%{_libdir}/python{1.5,2.0,2.1,2.2}
 
 %find_lang %{name}
 
+%if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
+%endif
 
 %clean
 rm -rf %{buildroot}
