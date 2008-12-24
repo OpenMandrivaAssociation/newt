@@ -5,7 +5,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.6
-Release:	%mkrel 5
+Release:	%mkrel 7
 License:	LGPL
 Group:		System/Libraries
 URL:		http://www.mandriva.com/
@@ -18,6 +18,7 @@ Patch4: 	newt-0.52.6-entry.patch
 Patch5: 	newt-0.52.6-countitems.patch
 Patch6: 	newt-0.52.6-cursor.patch
 Patch7: 	newt-0.52.6-memleaks.patch
+Patch8:		newt-0.52.6-LDFLAGS.diff
 BuildRequires:	glibc-static-devel
 BuildRequires:	popt-devel
 BuildRequires:	python-devel >= 2.2
@@ -74,6 +75,7 @@ Install newt-devel if you want to develop applications which will use newt.
 %patch5 -p0 -b .countitems
 %patch6 -p0 -b .cursor
 %patch7 -p0 -b .memleaks
+%patch8 -p0 -b .LDFLAGS
 
 %build
 %configure --with-gpm-support --without-tcl
