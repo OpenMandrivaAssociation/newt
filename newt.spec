@@ -5,7 +5,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.6
-Release:	%mkrel 7
+Release:	%mkrel 8
 License:	LGPL
 Group:		System/Libraries
 URL:		http://www.mandriva.com/
