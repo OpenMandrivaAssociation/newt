@@ -4,21 +4,17 @@
 
 Summary:	A development library for text mode user interfaces
 Name:		newt
-Version:	0.52.6
-Release:	%mkrel 8
+Version:	0.52.11
+Release:	%mkrel 1
 License:	LGPL
 Group:		System/Libraries
-URL:		http://www.mandriva.com/
-Source0:	ftp://ftp.redhat.com/pub/redhat/linux/code/newt/newt-%{version}.tar.gz
+URL:		https://fedorahosted.org/newt/
+Source0:	ttps://fedorahosted.org/releases/n/e/newt/%{name}-%{version}.tar.gz
 Patch0: 	newt-gpm-fix.diff
 Patch1: 	newt-0.52.6-mdvconf.patch
 Patch2: 	newt-0.51.4-fix-wstrlen-for-non-utf8-strings.patch
 Patch3: 	newt-0.51.6-assorted-fixes.patch
-Patch4: 	newt-0.52.6-entry.patch
-Patch5: 	newt-0.52.6-countitems.patch
-Patch6: 	newt-0.52.6-cursor.patch
-Patch7: 	newt-0.52.6-memleaks.patch
-Patch8:		newt-0.52.6-LDFLAGS.diff
+Patch8:         newt-0.52.11-LDFLAGS.diff
 BuildRequires:	glibc-static-devel
 BuildRequires:	popt-devel
 BuildRequires:	python-devel >= 2.2
@@ -71,11 +67,7 @@ Install newt-devel if you want to develop applications which will use newt.
 %patch1 -p1 -b .mdvconf
 %patch2 -p1 -b .fix-wstrlen-for-non-utf8-strings
 %patch3 -p1 -b .assorted-fixes
-%patch4 -p0 -b .entry
-%patch5 -p0 -b .countitems
-%patch6 -p0 -b .cursor
-%patch7 -p0 -b .memleaks
-%patch8 -p0 -b .LDFLAGS
+%patch8 -p1 -b .LDFLAGS
 
 %build
 %configure --with-gpm-support --without-tcl
@@ -123,5 +115,5 @@ rm -rf %{buildroot}
 %{_includedir}/newt.h
 %{_libdir}/libnewt.a
 %{_libdir}/libnewt.so
-
+%{_libdir}/pkgconfig/libnewt.pc
 
