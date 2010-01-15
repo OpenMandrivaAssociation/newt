@@ -4,7 +4,7 @@
 
 Summary:	A development library for text mode user interfaces
 Name:		newt
-Version:	0.52.4
+Version:	0.52.11
 Release:	%mkrel 1
 License:	LGPLv2+
 Group:		System/Libraries
