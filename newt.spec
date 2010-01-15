@@ -4,9 +4,9 @@
 
 Summary:	A development library for text mode user interfaces
 Name:		newt
-Version:	0.52.11
+Version:	0.52.4
 Release:	%mkrel 1
-License:	LGPL
+License:	LGPLv2+
 Group:		System/Libraries
 URL:		https://fedorahosted.org/newt/
 Source0:	ttps://fedorahosted.org/releases/n/e/newt/%{name}-%{version}.tar.gz
