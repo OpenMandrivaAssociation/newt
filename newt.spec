@@ -71,7 +71,7 @@ rm -rf %{buildroot}%{_libdir}/python{1.5,2.0,2.1,2.2}
 %files -f %{name}.lang
 %doc CHANGES COPYING
 %{_bindir}/whiptail
-%{py_puresitedir}/*
+%{py_platsitedir}/*
 %{_mandir}/man1/whiptail.1*
 
 %files -n %{libname}
