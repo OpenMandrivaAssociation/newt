@@ -1,6 +1,6 @@
-%define major 0.52
-%define libname %mklibname %{name} %{major}
-%define develname %mklibname %{name} -d
+%define	major	0.52
+%define	libname	%mklibname %{name} %{major}
+%define	devname	%mklibname %{name} -d
 
 %bcond_without diet
 %bcond_without uclibc
@@ -46,14 +46,14 @@ Provides:	lib%{name} = %{version}-%{release}
 %description -n %{libname}
 This package contains the shared library for %{name}.
 
-%package -n	%{develname}
+%package -n	%{devname}
 Summary:	Newt windowing toolkit development files
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%{_lib}%{name}0.52-devel
 
-%description -n %{develname}
+%description -n %{devname}
 This package contains the development files for %{name}.
 
 %prep
@@ -100,7 +100,6 @@ popd
 %make shared
 
 %install
-#install -d %{buildroot}
 %makeinstall
 
 %if %{with diet}
@@ -113,8 +112,6 @@ install -m644 uclibc/libnewt.a -D %{buildroot}%{_prefix}/uclibc/%{_libdir}/libne
 
 ln -snf lib%{name}.so.%{version} %{buildroot}%{_libdir}/lib%{name}.so.%{major}
 
-rm -rf %{buildroot}%{_libdir}/python{1.5,2.0,2.1,2.2}
-
 %find_lang %{name}
 
 %files -f %{name}.lang
@@ -126,7 +123,7 @@ rm -rf %{buildroot}%{_libdir}/python{1.5,2.0,2.1,2.2}
 %files -n %{libname}
 %{_libdir}/libnewt.so.%{major}*
 
-%files -n %{develname}
+%files -n %{devname}
 %doc tutorial.sgml
 %{_includedir}/newt.h
 %{_libdir}/libnewt.a
@@ -138,4 +135,3 @@ rm -rf %{buildroot}%{_libdir}/python{1.5,2.0,2.1,2.2}
 %endif
 %{_libdir}/libnewt.so
 %{_libdir}/pkgconfig/libnewt.pc
-
