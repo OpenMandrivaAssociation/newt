@@ -2,10 +2,13 @@
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
 
+%bcond_without diet
+%bcond_without uclibc
+
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.14
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		https://fedorahosted.org/newt/
@@ -18,6 +21,12 @@ BuildRequires:	glibc-static-devel
 BuildRequires:	popt-devel
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	slang-devel
+%if %{with diet}
+BuildRequires:	dietlibc-devel
+%endif
+%if %{with uclibc}
+BuildRequires:	uClibc-devel >= 0.9.33.2-3
+%endif
 
 Provides:	python-snack
 Provides:	whiptail
@@ -51,7 +60,39 @@ This package contains the development files for %{name}.
 %setup -q
 %apply_patches
 
+%if %{with diet}
+mkdir diet
+pushd diet
+ln -s ../*.[ch] ../newt.spec .
+popd
+%endif
+
+%if %{with uclibc}
+mkdir uclibc
+pushd uclibc
+ln -s ../*.[ch] ../newt.spec .
+popd
+%endif
+
 %build
+%if %{with diet}
+pushd diet
+CC="diet gcc" CFLAGS="-Os -g" \
+../configure	--without-gpm-support \
+		--without-tcl
+%make libnewt.a
+popd
+%endif
+
+%if %{with uclibc}
+pushd uclibc
+CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}" \
+../configure	--without-gpm-support \
+		--without-tcl
+%make libnewt.a
+popd
+%endif
+
 %configure2_5x \
 	--with-gpm-support \
 	--without-tcl
@@ -61,6 +102,14 @@ This package contains the development files for %{name}.
 %install
 #install -d %{buildroot}
 %makeinstall
+
+%if %{with diet}
+install -m644 diet/libnewt.a -D %{buildroot}%{_prefix}/lib/dietlibc/lib-%{_arch}/libnewt.a
+%endif
+
+%if %{with uclibc}
+install -m644 uclibc/libnewt.a -D %{buildroot}%{_prefix}/uclibc/%{_libdir}/libnewt.a
+%endif
 
 ln -snf lib%{name}.so.%{version} %{buildroot}%{_libdir}/lib%{name}.so.%{major}
 
@@ -81,6 +130,12 @@ rm -rf %{buildroot}%{_libdir}/python{1.5,2.0,2.1,2.2}
 %doc tutorial.sgml
 %{_includedir}/newt.h
 %{_libdir}/libnewt.a
+%if %{with diet}
+%{_prefix}/lib/dietlibc/lib-%{_arch}/libnewt.a
+%endif
+%if %{with uclibc}
+%{_prefix}/uclibc%{_libdir}/libnewt.a
+%endif
 %{_libdir}/libnewt.so
 %{_libdir}/pkgconfig/libnewt.pc
 
