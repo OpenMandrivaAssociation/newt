@@ -79,7 +79,8 @@ popd
 pushd diet
 CC="diet gcc" CFLAGS="-Os -g" \
 ../configure	--without-gpm-support \
-		--without-tcl
+		--without-tcl \
+		--disable-nls
 %make libnewt.a
 popd
 %endif
@@ -88,7 +89,8 @@ popd
 pushd uclibc
 CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}" \
 ../configure	--without-gpm-support \
-		--without-tcl
+		--without-tcl \
+		--disable-nls
 %make libnewt.a
 popd
 %endif
