@@ -8,7 +8,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.14
-Release:	2
+Release:	3
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		https://fedorahosted.org/newt/
@@ -29,6 +29,8 @@ BuildRequires:	uClibc-devel >= 0.9.33.2-3
 %endif
 
 Provides:	python-snack
+# for newt_syrup
+Provides:	pythonegg(newt-python) == %{version}-%{release}
 Provides:	whiptail
 
 %description
