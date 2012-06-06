@@ -30,7 +30,7 @@ BuildRequires:	uClibc-devel >= 0.9.33.2-3
 
 Provides:	python-snack
 # for newt_syrup
-Provides:	pythonegg(newt-python) == %{version}-%{release}
+Provides:	pythonegg(newt-python) = %{version}-%{release}
 Provides:	whiptail
 
 %description
@@ -43,15 +43,26 @@ whiptail. Newt is based on the slang library.
 %package -n	%{libname}
 Summary:	Newt windowing toolkit development files library
 Group:		Development/C
-Provides:	lib%{name} = %{version}-%{release}
 
 %description -n %{libname}
 This package contains the shared library for %{name}.
+
+%if %{with uclibc}
+%package -n	uclibc-%{libname}
+Summary:	Newt windowing toolkit development files library
+Group:		Development/C
+
+%description -n uclibc-%{libname}
+This package contains the shared library for %{name}, linked against uClibc.
+%endif
 
 %package -n	%{devname}
 Summary:	Newt windowing toolkit development files
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
+%if %{with uclibc}
+Requires:	%{libname} = %{version}-%{release}
+%endif
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%{_lib}%{name}0.52-devel
 
@@ -65,38 +76,44 @@ This package contains the development files for %{name}.
 %if %{with diet}
 mkdir diet
 pushd diet
-ln -s ../*.[ch] ../newt.spec .
+ln -s ../*.[ch] ../newt.spec ..*/ver .
 popd
 %endif
 
 %if %{with uclibc}
 mkdir uclibc
 pushd uclibc
-ln -s ../*.[ch] ../newt.spec .
+ln -s ../*.[ch] ../newt.spec ../*ver .
 popd
 %endif
 
 %build
 %if %{with diet}
 pushd diet
-CC="diet gcc" CFLAGS="-Os -g" \
 ../configure	--without-gpm-support \
 		--without-tcl \
-		--disable-nls
+		--without-python \
+		--disable-nls \
+		CC="diet gcc" CFLAGS="-Os -g"
 %make libnewt.a
 popd
 %endif
 
 %if %{with uclibc}
 pushd uclibc
-CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}" \
-../configure	--without-gpm-support \
+CONFIGURE_TOP=.. \
+%configure2_5x	--prefix=%{uclibc_root} \
+		--libdir=%{uclibc_root}%{_libdir} \
+		--without-gpm-support \
+		--without-python \
 		--without-tcl \
-		--disable-nls
-%make libnewt.a
+		--disable-nls \
+		CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}"
+%make libnewt.a sharedlib
 popd
 %endif
 
+CONFIGURE_TOP=. \
 %configure2_5x \
 	--with-gpm-support \
 	--without-tcl
@@ -104,17 +121,17 @@ popd
 %make shared
 
 %install
-%makeinstall
+%makeinstall_std
+ln -snf lib%{name}.so.%{version} %{buildroot}%{_libdir}/lib%{name}.so.%{major}
 
 %if %{with diet}
 install -m644 diet/libnewt.a -D %{buildroot}%{_prefix}/lib/dietlibc/lib-%{_arch}/libnewt.a
 %endif
 
 %if %{with uclibc}
-install -m644 uclibc/libnewt.a -D %{buildroot}%{_prefix}/uclibc/%{_libdir}/libnewt.a
+install -m644 uclibc/libnewt.a -D %{buildroot}%{uclibc_root}%{_libdir}/libnewt.a
+cp -a uclibc/libnewt.so* %{buildroot}%{uclibc_root}%{_libdir}
 %endif
-
-ln -snf lib%{name}.so.%{version} %{buildroot}%{_libdir}/lib%{name}.so.%{major}
 
 %find_lang %{name}
 
@@ -127,6 +144,11 @@ ln -snf lib%{name}.so.%{version} %{buildroot}%{_libdir}/lib%{name}.so.%{major}
 %files -n %{libname}
 %{_libdir}/libnewt.so.%{major}*
 
+%if %{with uclibc}
+%files -n uclibc-%{libname}
+%{uclibc_root}%{_libdir}/libnewt.so.%{major}*
+%endif
+
 %files -n %{devname}
 %doc tutorial.sgml
 %{_includedir}/newt.h
@@ -135,7 +157,8 @@ ln -snf lib%{name}.so.%{version} %{buildroot}%{_libdir}/lib%{name}.so.%{major}
 %{_prefix}/lib/dietlibc/lib-%{_arch}/libnewt.a
 %endif
 %if %{with uclibc}
-%{_prefix}/uclibc%{_libdir}/libnewt.a
+%{uclibc_root}%{_libdir}/libnewt.so
+%{uclibc_root}%{_libdir}/libnewt.a
 %endif
 %{_libdir}/libnewt.so
 %{_libdir}/pkgconfig/libnewt.pc
