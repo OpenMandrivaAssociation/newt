@@ -108,7 +108,8 @@ CONFIGURE_TOP=.. \
 		--without-python \
 		--without-tcl \
 		--disable-nls \
-		CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}"
+		CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}" \
+		LDFLAGS="%{ldflags} -Wl,-O2 -flto"
 %make libnewt.a sharedlib GNU_LD=1
 popd
 %endif
@@ -116,7 +117,8 @@ popd
 CONFIGURE_TOP=. \
 %configure2_5x \
 	--with-gpm-support \
-	--without-tcl
+	--without-tcl \
+	LDFLAGS="%{ldflags} -Wl,-O2 -flto"
 # libnewt dynamically linked against libslang:
 # -rwxr-xr-x 1 root root 92520 mai   26 00:49 /usr/lib64/libnewt.so.0.52.14*
 # -rwxr-xr-x 1 root root 1124544 juni   6 03:36 /usr/lib64/libslang.so.2.2.4*
