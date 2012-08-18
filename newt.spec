@@ -118,6 +118,7 @@ CONFIGURE_TOP=. \
 %configure2_5x \
 	--with-gpm-support \
 	--without-tcl \
+	CFLAGS="%{optflags} -Os" \
 	LDFLAGS="%{ldflags} -Wl,-O2 -flto"
 # libnewt dynamically linked against libslang:
 # -rwxr-xr-x 1 root root 92520 mai   26 00:49 /usr/lib64/libnewt.so.0.52.14*
