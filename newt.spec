@@ -109,7 +109,7 @@ CONFIGURE_TOP=.. \
 		--without-tcl \
 		--disable-nls \
 		CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}"
-%make libnewt.a sharedlib
+%make libnewt.a sharedlib GNU_LD=1
 popd
 %endif
 
@@ -127,7 +127,7 @@ CONFIGURE_TOP=. \
 # doing dynamic linking against libslang pulls in a dependency on a library
 # that's quite huge in size, so by statically linking and only pulling in
 # exactly what we need we'll save quite a lot of space
-%make LIBS="-Wl,-Bstatic -lslang -Wl,-Bdynamic"
+%make LIBS="-Wl,-Bstatic -lslang -Wl,-Bdynamic" GNU_LD=1
 
 %install
 %makeinstall_std
