@@ -8,7 +8,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.14
-Release:	3
+Release:	4
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		https://fedorahosted.org/newt/
@@ -117,8 +117,17 @@ CONFIGURE_TOP=. \
 %configure2_5x \
 	--with-gpm-support \
 	--without-tcl
-%make
-%make shared
+# libnewt dynamically linked against libslang:
+# -rwxr-xr-x 1 root root 92520 mai   26 00:49 /usr/lib64/libnewt.so.0.52.14*
+# -rwxr-xr-x 1 root root 1124544 juni   6 03:36 /usr/lib64/libslang.so.2.2.4*
+
+# libnewt statically linked against libslang:
+# -rwxr-xr-x 1 peroyvind proyvind 358000 aug.  18 11:29 libnewt.so.0.52.14*
+
+# doing dynamic linking against libslang pulls in a dependency on a library
+# that's quite huge in size, so by statically linking and only pulling in
+# exactly what we need we'll save quite a lot of space
+%make LIBS="-Wl,-Bstatic -lslang -Wl,-Bdynamic"
 
 %install
 %makeinstall_std
