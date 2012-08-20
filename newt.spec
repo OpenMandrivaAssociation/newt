@@ -27,7 +27,7 @@ BuildRequires:	dietlibc-devel
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-3
 # need to make these automatic..
-BuildRequires:	uclibc-%{_lib}newt0
+BuildRequires:	uclibc-%{_lib}slang0
 %endif
 
 Provides:	python-snack
