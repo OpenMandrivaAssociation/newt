@@ -20,12 +20,14 @@ Patch2: 	newt-0.51.4-fix-wstrlen-for-non-utf8-strings.patch
 BuildRequires:	glibc-static-devel
 BuildRequires:	popt-devel
 BuildRequires:	python-devel >= 2.2
-BuildRequires:	slang-devel uclibc-lib64newt0
+BuildRequires:	slang-devel
 %if %{with diet}
 BuildRequires:	dietlibc-devel
 %endif
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-3
+# need to make these automatic..
+BuildRequires:	uclibc-%{_lib}newt0
 %endif
 
 Provides:	python-snack
