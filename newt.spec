@@ -20,7 +20,7 @@ Patch2: 	newt-0.51.4-fix-wstrlen-for-non-utf8-strings.patch
 BuildRequires:	glibc-static-devel
 BuildRequires:	popt-devel
 BuildRequires:	python-devel >= 2.2
-BuildRequires:	slang-devel
+BuildRequires:	slang-devel uclibc-lib64newt0
 %if %{with diet}
 BuildRequires:	dietlibc-devel
 %endif
