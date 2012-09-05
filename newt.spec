@@ -106,7 +106,7 @@ pushd uclibc
 CONFIGURE_TOP=.. \
 %configure2_5x	--prefix=%{uclibc_root} \
 		--libdir=%{uclibc_root}%{_libdir} \
-		--without-gpm-support \
+		--with-gpm-support \
 		--without-python \
 		--without-tcl \
 		--disable-nls \
