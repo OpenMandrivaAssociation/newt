@@ -8,7 +8,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.14
-Release:	4
+Release:	5
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		https://fedorahosted.org/newt/
@@ -27,8 +27,11 @@ BuildRequires:	dietlibc-devel
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-3
 # need to make these automatic..
-BuildRequires:	uclibc-%{_lib}slang0
+# we prefer linking statically against this to avoid pulling in the
+# "huge" libslang library..
+#BuildRequires:	uclibc-%{_lib}slang0
 %endif
+BuildRequires:	slang-static-devel
 
 Provides:	python-snack
 # for newt_syrup
@@ -112,7 +115,7 @@ CONFIGURE_TOP=.. \
 		--disable-nls \
 		CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}" \
 		LDFLAGS="%{ldflags} -Wl,-O2 -flto"
-%make libnewt.a sharedlib GNU_LD=1
+%make LIBS="-Wl,-Bstatic,-lslang,-Bdynamic" libnewt.a sharedlib GNU_LD=1
 popd
 %endif
 
@@ -132,7 +135,7 @@ CONFIGURE_TOP=. \
 # doing dynamic linking against libslang pulls in a dependency on a library
 # that's quite huge in size, so by statically linking and only pulling in
 # exactly what we need we'll save quite a lot of space
-%make LIBS="-Wl,-Bstatic -lslang -Wl,-Bdynamic" GNU_LD=1
+%make LIBS="-Wl,-Bstatic,-lslang,-Bdynamic" GNU_LD=1
 
 %install
 %makeinstall_std
