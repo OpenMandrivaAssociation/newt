@@ -8,7 +8,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.14
-Release:	5
+Release:	6
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		https://fedorahosted.org/newt/
@@ -25,7 +25,7 @@ BuildRequires:	slang-devel
 BuildRequires:	dietlibc-devel
 %endif
 %if %{with uclibc}
-BuildRequires:	uClibc-devel >= 0.9.33.2-3
+BuildRequires:	uClibc-devel >= 0.9.33.2-9
 # need to make these automatic..
 # we prefer linking statically against this to avoid pulling in the
 # "huge" libslang library..
@@ -112,7 +112,7 @@ CONFIGURE_TOP=.. \
 		--with-gpm-support \
 		--without-python \
 		--without-tcl \
-		--disable-nls \
+		--enable-nls \
 		CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}" \
 		LDFLAGS="%{ldflags} -Wl,-O2 -flto"
 %make LIBS="-Wl,-Bstatic,-lslang,-Bdynamic" libnewt.a sharedlib GNU_LD=1
