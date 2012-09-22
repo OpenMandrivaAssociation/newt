@@ -69,7 +69,7 @@ Summary:	Newt windowing toolkit development files
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 %if %{with uclibc}
-Requires:	%{libname} = %{version}-%{release}
+Requires:	uclibc-%{libname} = %{version}-%{release}
 %endif
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%{_lib}%{name}0.52-devel
