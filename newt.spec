@@ -18,6 +18,7 @@ Patch1: 	newt-0.52.6-mdvconf.patch
 Patch2: 	newt-0.51.4-fix-wstrlen-for-non-utf8-strings.patch
 Patch3: 	newt-0.51.14-assorted-fixes.patch
 Patch4:		newt-0.52.14-fix-aliasing-violations.patch
+Patch5:		newt-0.52.14-whole-program.patch
 BuildRequires:	glibc-static-devel
 BuildRequires:	popt-devel
 BuildRequires:	python-devel >= 2.2
@@ -33,6 +34,7 @@ BuildRequires:	uClibc-devel >= 0.9.33.2-9
 #BuildRequires:	uclibc-%{_lib}slang0
 %endif
 BuildRequires:	slang-static-devel
+BuildRequires:	slang-source
 
 Provides:	python-snack
 # for newt_syrup
@@ -116,7 +118,8 @@ CONFIGURE_TOP=.. \
 		--enable-nls \
 		CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}" \
 		LDFLAGS="%{ldflags} -Wl,-O2 -flto"
-%make LIBS="-Wl,-Bstatic,-lslang,-Bdynamic" libnewt.a sharedlib GNU_LD=1
+%make sharedlib GNU_LD=1 WHOLE_PROGRAM=1
+%make libnewt.a
 popd
 %endif
 
@@ -136,7 +139,8 @@ CONFIGURE_TOP=. \
 # doing dynamic linking against libslang pulls in a dependency on a library
 # that's quite huge in size, so by statically linking and only pulling in
 # exactly what we need we'll save quite a lot of space
-%make LIBS="-Wl,-Bstatic,-lslang,-Bdynamic" GNU_LD=1
+%make sharedlib GNU_LD=1 WHOLE_PROGRAM=1
+%make GNU_LD=1
 
 %install
 %makeinstall_std
