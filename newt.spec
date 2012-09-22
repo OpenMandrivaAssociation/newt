@@ -17,6 +17,7 @@ Source0:	https://fedorahosted.org/releases/n/e/newt/%{name}-%{version}.tar.gz
 Patch1: 	newt-0.52.6-mdvconf.patch
 Patch2: 	newt-0.51.4-fix-wstrlen-for-non-utf8-strings.patch
 Patch3: 	newt-0.51.14-assorted-fixes.patch
+Patch4:		newt-0.52.14-fix-aliasing-violations.patch
 BuildRequires:	glibc-static-devel
 BuildRequires:	popt-devel
 BuildRequires:	python-devel >= 2.2
