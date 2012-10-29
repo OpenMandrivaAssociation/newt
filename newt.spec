@@ -35,6 +35,7 @@ BuildRequires:	uClibc-devel >= 0.9.33.2-9
 %endif
 BuildRequires:	slang-static-devel
 BuildRequires:	slang-source
+BuildRequires:	gettext-devel
 
 Provides:	python-snack
 # for newt_syrup
