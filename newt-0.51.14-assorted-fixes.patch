@@ -1,0 +1,22 @@
+--- newt-0.52.14/grid.c.0003~	2011-11-11 12:00:15.000000000 +0100
++++ newt-0.52.14/grid.c	2012-09-04 23:52:16.637470193 +0200
+@@ -26,8 +26,8 @@ struct grid_s {
+     struct gridField ** fields;
+ };
+ 
+-/* this is a bit of a hack */
+-extern struct componentOps formOps[];
++/* make it local to the dso */
++extern struct componentOps formOps __attribute__ ((visibility ("hidden")));
+ 
+ newtGrid newtCreateGrid(int cols, int rows) {
+     newtGrid grid;
+@@ -108,7 +108,7 @@ static void shuffleGrid(newtGrid grid, i
+ 		    shuffleGrid(field->u.grid, left, top, 0);
+ 		j = field->u.grid->width;
+ 	    } else if (field->type == NEWT_GRID_COMPONENT) {
+-		if (field->u.co->ops == formOps)
++		if (field->u.co->ops == &formOps)
+ 		    newtFormSetSize(field->u.co);
+ 		j = field->u.co->width;
+ 	    } else 
