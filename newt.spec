@@ -8,7 +8,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.14
-Release:	6
+Release:	7
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		https://fedorahosted.org/newt/
@@ -187,6 +187,9 @@ cp -a uclibc/libnewt.so* %{buildroot}%{uclibc_root}%{_libdir}
 %{_libdir}/pkgconfig/libnewt.pc
 
 %changelog
+* Mon Oct 29 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 0.52.14-7
+- rebuild on ABF
+
 * Mon Oct 29 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 0.52.14-6
 + Revision: 820557
 - add dependency on gettext-devel
