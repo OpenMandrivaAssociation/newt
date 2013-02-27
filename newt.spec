@@ -8,7 +8,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.14
-Release:	7
+Release:	8
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		https://fedorahosted.org/newt/
@@ -117,7 +117,7 @@ CONFIGURE_TOP=.. \
 		--without-python \
 		--without-tcl \
 		--enable-nls \
-		CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}" \
+		CC="%{uclibc_cc}" CFLAGS="-fPIC %{uclibc_cflags}" \
 		LDFLAGS="%{ldflags} -Wl,-O2 -flto"
 %make sharedlib GNU_LD=1 WHOLE_PROGRAM=1
 %make libnewt.a
@@ -128,7 +128,7 @@ CONFIGURE_TOP=. \
 %configure2_5x \
 	--with-gpm-support \
 	--without-tcl \
-	CFLAGS="%{optflags} -Os" \
+	CFLAGS="-fPIC %{optflags} -Os" \
 	LDFLAGS="%{ldflags} -Wl,-O2 -flto"
 # libnewt dynamically linked against libslang:
 # -rwxr-xr-x 1 root root 92520 mai   26 00:49 /usr/lib64/libnewt.so.0.52.14*
