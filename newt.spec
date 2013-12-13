@@ -2,7 +2,7 @@
 %define	libname	%mklibname %{name} %{major}
 %define	devname	%mklibname %{name} -d
 
-%bcond_without diet
+%bcond_without dietlibc
 %bcond_without uclibc
 
 Summary:	A development library for text mode user interfaces
