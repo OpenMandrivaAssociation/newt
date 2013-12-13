@@ -79,6 +79,7 @@ This package contains the development files for %{name}.
 %prep
 %setup -q
 %apply_patches
+autoreconf -fiv
 
 %if %{with diet}
 mkdir diet
