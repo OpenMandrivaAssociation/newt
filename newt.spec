@@ -130,7 +130,11 @@ CONFIGURE_TOP=. \
 	--with-gpm-support \
 	--without-tcl \
 	CFLAGS="-fPIC %{optflags} -Os" \
+%ifnarch aarch64
 	LDFLAGS="%{ldflags} -Wl,-O2 -flto"
+%else
+	LDFLAGS="%{ldflags} -Wl,-O2"
+%endif
 # libnewt dynamically linked against libslang:
 # -rwxr-xr-x 1 root root 92520 mai   26 00:49 /usr/lib64/libnewt.so.0.52.14*
 # -rwxr-xr-x 1 root root 1124544 juni   6 03:36 /usr/lib64/libslang.so.2.2.4*
