@@ -7,8 +7,8 @@
 
 Summary:	A development library for text mode user interfaces
 Name:		newt
-Version:	0.52.16
-Release:	8
+Version:	0.52.17
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		https://fedorahosted.org/newt/
@@ -22,7 +22,7 @@ BuildRequires:	slang-static-devel
 BuildRequires:	slang-source
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(popt)
-BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(slang)
 %if %{with diet}
 BuildRequires:	dietlibc-devel
@@ -111,7 +111,7 @@ popd
 %if %{with uclibc}
 pushd uclibc
 CONFIGURE_TOP=.. \
-%configure2_5x \
+%configure \
 	--prefix=%{uclibc_root} \
 	--libdir=%{uclibc_root}%{_libdir} \
 	--with-gpm-support \
@@ -126,7 +126,7 @@ popd
 %endif
 
 CONFIGURE_TOP=. \
-%configure2_5x \
+%configure \
 	--with-gpm-support \
 	--without-tcl \
 	CFLAGS="-fPIC %{optflags} -Os" \
@@ -190,4 +190,3 @@ cp -a uclibc/libnewt.so* %{buildroot}%{uclibc_root}%{_libdir}
 %endif
 %{_libdir}/libnewt.so
 %{_libdir}/pkgconfig/libnewt.pc
-
