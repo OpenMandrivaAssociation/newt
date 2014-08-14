@@ -92,6 +92,7 @@ popd
 mkdir uclibc
 pushd uclibc
 ln -s ../*.[ch] ../newt.spec ../*ver .
+ln -s ../*.ac .
 popd
 %endif
 
