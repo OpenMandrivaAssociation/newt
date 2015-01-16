@@ -131,7 +131,7 @@ CONFIGURE_TOP=. \
 	--with-gpm-support \
 	--without-tcl \
 	CFLAGS="-fPIC %{optflags} -Os" \
-%ifnarch aarch64
+%ifnarch aarch64 %ix86
 	LDFLAGS="%{ldflags} -Wl,-O2 -flto"
 %else
 	LDFLAGS="%{ldflags} -Wl,-O2"
