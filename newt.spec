@@ -7,8 +7,8 @@
 
 Summary:	A development library for text mode user interfaces
 Name:		newt
-Version:	0.52.17
-Release:	2
+Version:	0.52.18
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		https://fedorahosted.org/newt/
@@ -131,7 +131,7 @@ CONFIGURE_TOP=. \
 	--with-gpm-support \
 	--without-tcl \
 	CFLAGS="-fPIC %{optflags} -Os" \
-%ifnarch aarch64 %ix86
+%ifnarch %armx %ix86
 	LDFLAGS="%{ldflags} -Wl,-O2 -flto"
 %else
 	LDFLAGS="%{ldflags} -Wl,-O2"
