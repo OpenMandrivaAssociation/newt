@@ -8,7 +8,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.18
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		https://fedorahosted.org/newt/
@@ -29,6 +29,8 @@ BuildRequires:	dietlibc-devel
 %endif
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-9
+BuildRequires:	uclibc-popt-devel
+BuildRequires:	uclibc-slang-devel
 # need to make these automatic..
 # we prefer linking statically against this to avoid pulling in the
 # "huge" libslang library..
@@ -61,15 +63,23 @@ Group:		Development/C
 
 %description -n uclibc-%{libname}
 This package contains the shared library for %{name}, linked against uClibc.
+
+%package -n	uclibc-%{devname}
+Summary:	Newt windowing toolkit development files
+Group:		Development/C
+Requires:	uclibc-%{libname} = %{EVRD}
+Requires:	%{devname} = %{EVRD}
+Provides:	uclibc-%{name}-devel = %{EVRD}
+Conflicts:	%{devname} < 0.52.18-2
+
+%description -n uclibc-%{devname}
+This package contains the development files for uclibc-%{name}.
 %endif
 
 %package -n	%{devname}
 Summary:	Newt windowing toolkit development files
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-%if %{with uclibc}
-Requires:	uclibc-%{libname} = %{version}-%{release}
-%endif
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%{_lib}%{name}0.52-devel
 
@@ -130,7 +140,7 @@ CONFIGURE_TOP=. \
 %configure \
 	--with-gpm-support \
 	--without-tcl \
-	CFLAGS="-fPIC %{optflags} -Os" \
+	CFLAGS="-fPIC %{optflags}" \
 %ifnarch %armx %ix86
 	LDFLAGS="%{ldflags} -Wl,-O2 -flto"
 %else
@@ -176,6 +186,10 @@ cp -a uclibc/libnewt.so* %{buildroot}%{uclibc_root}%{_libdir}
 %if %{with uclibc}
 %files -n uclibc-%{libname}
 %{uclibc_root}%{_libdir}/libnewt.so.%{major}*
+
+%files -n uclibc-%{devname}
+%{uclibc_root}%{_libdir}/libnewt.so
+%{uclibc_root}%{_libdir}/libnewt.a
 %endif
 
 %files -n %{devname}
@@ -184,10 +198,6 @@ cp -a uclibc/libnewt.so* %{buildroot}%{uclibc_root}%{_libdir}
 %{_libdir}/libnewt.a
 %if %{with diet}
 %{_prefix}/lib/dietlibc/lib-%{_arch}/libnewt.a
-%endif
-%if %{with uclibc}
-%{uclibc_root}%{_libdir}/libnewt.so
-%{uclibc_root}%{_libdir}/libnewt.a
 %endif
 %{_libdir}/libnewt.so
 %{_libdir}/pkgconfig/libnewt.pc
