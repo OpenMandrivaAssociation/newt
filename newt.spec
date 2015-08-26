@@ -3,12 +3,12 @@
 %define	devname	%mklibname %{name} -d
 
 %bcond_without dietlibc
-%bcond_without uclibc
+%bcond_with uclibc
 
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.18
-Release:	4
+Release:	5
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		https://fedorahosted.org/newt/
