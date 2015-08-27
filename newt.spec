@@ -1,4 +1,4 @@
-%define	major	0.52
+%define	major 0.52
 %define	libname	%mklibname %{name} %{major}
 %define	devname	%mklibname %{name} -d
 
@@ -107,6 +107,8 @@ popd
 %endif
 
 %build
+export PYTHON=%{__python}
+
 %if %{with diet}
 pushd diet
 ../configure \
