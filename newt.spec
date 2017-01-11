@@ -3,12 +3,10 @@
 %define	devname	%mklibname %{name} -d
 
 %bcond_without dietlibc
-%bcond_with uclibc
-
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.18
-Release:	5
+Release:	6
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		https://fedorahosted.org/newt/
@@ -26,15 +24,6 @@ BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(slang)
 %if %{with diet}
 BuildRequires:	dietlibc-devel
-%endif
-%if %{with uclibc}
-BuildRequires:	uClibc-devel >= 0.9.33.2-9
-BuildRequires:	uclibc-popt-devel
-BuildRequires:	uclibc-slang-devel
-# need to make these automatic..
-# we prefer linking statically against this to avoid pulling in the
-# "huge" libslang library..
-#BuildRequires:	uclibc-%{_lib}slang0
 %endif
 
 Provides:	python-snack
@@ -55,26 +44,6 @@ Group:		Development/C
 
 %description -n %{libname}
 This package contains the shared library for %{name}.
-
-%if %{with uclibc}
-%package -n	uclibc-%{libname}
-Summary:	Newt windowing toolkit development files library
-Group:		Development/C
-
-%description -n uclibc-%{libname}
-This package contains the shared library for %{name}, linked against uClibc.
-
-%package -n	uclibc-%{devname}
-Summary:	Newt windowing toolkit development files
-Group:		Development/C
-Requires:	uclibc-%{libname} = %{EVRD}
-Requires:	%{devname} = %{EVRD}
-Provides:	uclibc-%{name}-devel = %{EVRD}
-Conflicts:	%{devname} < 0.52.18-2
-
-%description -n uclibc-%{devname}
-This package contains the development files for uclibc-%{name}.
-%endif
 
 %package -n	%{devname}
 Summary:	Newt windowing toolkit development files
@@ -98,14 +67,6 @@ ln -s ../*.[ch] ../newt.spec ..*/ver .
 popd
 %endif
 
-%if %{with uclibc}
-mkdir uclibc
-pushd uclibc
-ln -s ../*.[ch] ../newt.spec ../*ver .
-ln -s ../*.ac .
-popd
-%endif
-
 %build
 export PYTHON=%{__python}
 
@@ -117,23 +78,6 @@ pushd diet
 	--without-python \
 	--disable-nls \
 	CC="diet gcc" CFLAGS="-Os -g"
-%make libnewt.a
-popd
-%endif
-
-%if %{with uclibc}
-pushd uclibc
-CONFIGURE_TOP=.. \
-%configure \
-	--prefix=%{uclibc_root} \
-	--libdir=%{uclibc_root}%{_libdir} \
-	--with-gpm-support \
-	--without-python \
-	--without-tcl \
-	--enable-nls \
-	CC="%{uclibc_cc}" CFLAGS="-fPIC %{uclibc_cflags}" \
-	LDFLAGS="%{ldflags} -Wl,-O2 -flto"
-%make sharedlib GNU_LD=1 WHOLE_PROGRAM=1
 %make libnewt.a
 popd
 %endif
@@ -169,30 +113,16 @@ ln -snf lib%{name}.so.%{version} %{buildroot}%{_libdir}/lib%{name}.so.%{major}
 install -m644 diet/libnewt.a -D %{buildroot}%{_prefix}/lib/dietlibc/lib-%{_arch}/libnewt.a
 %endif
 
-%if %{with uclibc}
-install -m644 uclibc/libnewt.a -D %{buildroot}%{uclibc_root}%{_libdir}/libnewt.a
-cp -a uclibc/libnewt.so* %{buildroot}%{uclibc_root}%{_libdir}
-%endif
-
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc CHANGES COPYING
+%doc CHANGES
 %{_bindir}/whiptail
 %{py_platsitedir}/*
 %{_mandir}/man1/whiptail.1*
 
 %files -n %{libname}
 %{_libdir}/libnewt.so.%{major}*
-
-%if %{with uclibc}
-%files -n uclibc-%{libname}
-%{uclibc_root}%{_libdir}/libnewt.so.%{major}*
-
-%files -n uclibc-%{devname}
-%{uclibc_root}%{_libdir}/libnewt.so
-%{uclibc_root}%{_libdir}/libnewt.a
-%endif
 
 %files -n %{devname}
 %doc tutorial.sgml
