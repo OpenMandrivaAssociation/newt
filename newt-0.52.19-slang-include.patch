@@ -1,0 +1,22 @@
+--- newt-0.52.19/configure.ac.orig	2016-05-09 22:50:07.462925218 -0400
++++ newt-0.52.19/configure.ac	2016-03-23 11:46:24.000000000 -0400
+@@ -37,7 +37,7 @@
+ AC_CHECK_HEADERS([sys/select.h alloca.h])
+ AC_CHECK_HEADER([slang.h], [], [
+   old_CPPFLAGS=${CPPFLAGS}
+-  CPPFLAGS="${CPPFLAGS} -I/opt/local/include"
++  CPPFLAGS="${CPPFLAGS} -I/usr/include/slang"
+   unset ac_cv_header_slang_h
+   AC_CHECK_HEADER([slang.h])
+   if test x$ac_cv_header_slang_h = x; then
+--- newt-0.52.19/configure.orig	2016-05-09 22:50:12.982995624 -0400
++++ newt-0.52.19/configure	2016-05-09 22:50:45.558411110 -0400
+@@ -3898,7 +3898,7 @@
+ else
+ 
+   old_CPPFLAGS=${CPPFLAGS}
+-  CPPFLAGS="${CPPFLAGS} -I/opt/local/include"
++  CPPFLAGS="${CPPFLAGS} -I/usr/include/slang"
+   unset ac_cv_header_slang_h
+   ac_fn_c_check_header_mongrel "$LINENO" "slang.h" "ac_cv_header_slang_h" "$ac_includes_default"
+ if test "x$ac_cv_header_slang_h" = xyes; then :
