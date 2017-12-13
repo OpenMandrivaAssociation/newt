@@ -11,6 +11,7 @@ License:	LGPLv2+
 Group:		System/Libraries
 Url:		https://fedorahosted.org/newt/
 Source0:	https://fedorahosted.org/releases/n/e/newt/%{name}-%{version}.tar.gz
+Patch0: 	newt-0.52.19-slang-include.patch
 Patch1: 	newt-0.52.6-mdvconf.patch
 Patch2: 	newt-0.51.4-fix-wstrlen-for-non-utf8-strings.patch
 Patch3: 	newt-0.51.14-assorted-fixes.patch
@@ -30,6 +31,7 @@ Provides:	python-snack
 # for newt_syrup
 Provides:	pythonegg(newt-python) = %{version}-%{release}
 Provides:	whiptail
+Requires:	slang
 
 %description
 Newt is a programming library for color text mode, widget based user
@@ -48,8 +50,9 @@ This package contains the shared library for %{name}.
 %package -n	%{devname}
 Summary:	Newt windowing toolkit development files
 Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
+Requires:	pkgconfig(slang)
 Obsoletes:	%{_lib}%{name}0.52-devel
 
 %description -n %{devname}
