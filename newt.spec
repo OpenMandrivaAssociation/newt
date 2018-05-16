@@ -6,7 +6,7 @@
 Summary:	A development library for text mode user interfaces
 Name:		newt
 Version:	0.52.20
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		https://fedorahosted.org/newt/
@@ -21,15 +21,12 @@ BuildRequires:	slang-static-devel
 BuildRequires:	slang-source
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(popt)
+BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(slang)
 %if %{with diet}
 BuildRequires:	dietlibc-devel
 %endif
-
-Provides:	python-snack
-# for newt_syrup
-Provides:	pythonegg(newt-python) = %{version}-%{release}
 Provides:	whiptail
 Requires:	slang
 
@@ -39,6 +36,28 @@ interfaces. Newt can be used to add stacked windows, entry widgets, checkboxes,
 radio buttons, labels, plain text fields, scrollbars, etc., to text mode user
 interfaces.  This package contains a /usr/bin/dialog replacement called
 whiptail. Newt is based on the slang library.
+
+%package -n python-newt
+Summary:	Python bindings to the newt text mode windowing toolkit
+Group:		Development/Python
+Requires:	%{libname} = %{EVRD}
+Provides:	python-snack = %{EVRD}
+# for newt_syrup
+Provides:	python3egg(newt-python) = %{version}-%{release}
+
+%description -n python-newt
+Python bindings to the newt text mode windowing toolkit
+
+%package -n python2-newt
+Summary:	Python 2.x bindings to the newt text mode windowing toolkit
+Group:		Development/Python
+Requires:	%{libname} = %{EVRD}
+Provides:	python2-snack = %{EVRD}
+# for newt_syrup
+Provides:	pythonegg(newt-python) = %{version}-%{release}
+
+%description -n python2-newt
+Python 2.x bindings to the newt text mode windowing toolkit
 
 %package -n	%{libname}
 Summary:	Newt windowing toolkit development files library
@@ -121,8 +140,13 @@ install -m644 diet/libnewt.a -D %{buildroot}%{_prefix}/lib/dietlibc/lib-%{_arch}
 %files -f %{name}.lang
 %doc CHANGES
 %{_bindir}/whiptail
-%{py_platsitedir}/*
 %{_mandir}/man1/whiptail.1*
+
+%files -n python-newt
+%{py3_platsitedir}/*
+
+%files -n python2-newt
+%{py2_platsitedir}/*
 
 %files -n %{libname}
 %{_libdir}/libnewt.so.%{major}*
