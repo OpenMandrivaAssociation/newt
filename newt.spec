@@ -21,7 +21,7 @@ BuildRequires:	slang-static-devel
 BuildRequires:	slang-source
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(popt)
-BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python2)
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(slang)
 %if %{with diet}
