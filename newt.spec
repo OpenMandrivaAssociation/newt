@@ -5,8 +5,8 @@
 %bcond_without dietlibc
 Summary:	A development library for text mode user interfaces
 Name:		newt
-Version:	0.52.21
-Release:	4
+Version:	0.52.22
+Release:	1
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		https://fedorahosted.org/newt/
@@ -21,7 +21,6 @@ BuildRequires:	slang-static-devel
 BuildRequires:	slang-source
 BuildRequires:	gettext-devel
 BuildRequires:	pkgconfig(popt)
-BuildRequires:	pkgconfig(python2)
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(slang)
 %if %{with diet}
@@ -47,17 +46,6 @@ Provides:	python3egg(newt-python) = %{version}-%{release}
 
 %description -n python-newt
 Python bindings to the newt text mode windowing toolkit
-
-%package -n python2-newt
-Summary:	Python 2.x bindings to the newt text mode windowing toolkit
-Group:		Development/Python
-Requires:	%{libname} = %{EVRD}
-Provides:	python2-snack = %{EVRD}
-# for newt_syrup
-Provides:	pythonegg(newt-python) = %{version}-%{release}
-
-%description -n python2-newt
-Python 2.x bindings to the newt text mode windowing toolkit
 
 %package -n	%{libname}
 Summary:	Newt windowing toolkit development files library
@@ -144,9 +132,6 @@ install -m644 diet/libnewt.a -D %{buildroot}%{_prefix}/lib/dietlibc/lib-%{_arch}
 
 %files -n python-newt
 %{py3_platsitedir}/*
-
-%files -n python2-newt
-%{py2_platsitedir}/*
 
 %files -n %{libname}
 %{_libdir}/libnewt.so.%{major}*
