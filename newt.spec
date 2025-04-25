@@ -5,7 +5,7 @@
 %bcond_without dietlibc
 Summary:	A development library for text mode user interfaces
 Name:		newt
-Version:	0.52.24
+Version:	0.52.25
 Release:	1
 License:	LGPLv2+
 Group:		System/Libraries

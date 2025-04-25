@@ -1,18 +1,18 @@
-diff -up newt-0.52.22/configure.1~ newt-0.52.22/configure
---- newt-0.52.22/configure.1~	2022-11-26 02:43:09.545116886 +0100
-+++ newt-0.52.22/configure	2022-11-26 02:43:46.651331490 +0100
-@@ -3932,7 +3932,7 @@ then :
- else $as_nop
- 
+diff -up newt-0.52.25/configure.1~ newt-0.52.25/configure
+--- newt-0.52.25/configure.1~	2025-03-10 14:32:29.000000000 +0100
++++ newt-0.52.25/configure	2025-04-25 01:58:54.108280164 +0200
+@@ -3965,7 +3965,7 @@ then :
+ else case e in #(
+   e)
    old_CPPFLAGS=${CPPFLAGS}
 -  CPPFLAGS="${CPPFLAGS} -I/opt/local/include"
 +  CPPFLAGS="${CPPFLAGS} -I/usr/include/slang"
    unset ac_cv_header_slang_h
    ac_fn_c_check_header_compile "$LINENO" "slang.h" "ac_cv_header_slang_h" "$ac_includes_default"
  if test "x$ac_cv_header_slang_h" = xyes
-diff -up newt-0.52.22/configure.ac.1~ newt-0.52.22/configure.ac
---- newt-0.52.22/configure.ac.1~	2022-11-21 14:58:11.000000000 +0100
-+++ newt-0.52.22/configure.ac	2022-11-26 02:43:09.543116875 +0100
+diff -up newt-0.52.25/configure.ac.1~ newt-0.52.25/configure.ac
+--- newt-0.52.25/configure.ac.1~	2025-03-10 14:29:06.000000000 +0100
++++ newt-0.52.25/configure.ac	2025-04-25 01:58:12.435266863 +0200
 @@ -37,7 +37,7 @@ fi
  AC_CHECK_HEADERS([sys/select.h alloca.h])
  AC_CHECK_HEADER([slang.h], [], [
