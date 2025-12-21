@@ -16,6 +16,11 @@ Patch1: 	newt-0.52.6-mdvconf.patch
 Patch2: 	newt-0.51.4-fix-wstrlen-for-non-utf8-strings.patch
 Patch3: 	newt-0.51.14-assorted-fixes.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	glibc-static-devel
 BuildRequires:	slang-static-devel
 BuildRequires:	slang-source
