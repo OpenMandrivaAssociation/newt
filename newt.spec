@@ -85,6 +85,26 @@ popd
 %build
 export PYTHON=%{__python}
 
+%if %{cross_compiling}
+# newt uses python-config to determine cflags for building/linking with
+# python -- which of course throws the HOST compiler flags at us, and
+# -march=znver1 and friends aren't accepted on loongarch, riscv etc.
+# So we have to "sanitize" python-config
+cat >python%{pyver}-config <<'EOF'
+#!/bin/bash
+case "$1" in
+--cflags)
+	echo %{optflags} -I%{_includedir}/python%{pyver}
+	;;
+--ldflags)
+	echo -lpython%{pyver}
+	;;
+esac
+EOF
+chmod +x python%{pyver}-config
+export PATH=$(pwd):$PATH
+%endif
+
 %if %{with diet}
 pushd diet
 ../configure \
